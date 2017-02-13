@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>mvue</title>
+</head>
+<body>
+  <div id="mvue-app">
+    <input type="text" v-model="words">
+    <input type="text" v-model="child.words">
+    <p v-class="className" class="abc">
+      {{words}}
+      <span v-text="child.words"></span>
+    </p>
+    <button v-on:click="clickBtn">change model</button>
+    <p v-html="htmlStr"></p>
+  </div>
+  <script src="./js/observer.js"></script>
+  <script src="./js/watcher.js"></script>
+  <script src="./js/compile.js"></script>
+  <script src="./js/mvue.js"></script>
+  <script>
+  var vm = new MVUE({
+    el: '#mvue-app',
+    data: {
+      words: 'Hello ',
+      className: 'btn',
+      htmlStr: '<span style="color: #f00;">Powered by mvue</span>',
+      child: {
+        words: 'World !'
+      }
+    },
+    methods: {
+      clickBtn (e) {
+        var randomStrArr = ['Dota', 'All', 'Stars'];
+        this.child.words = randomStrArr[Math.floor(Math.random() * 3)];
+      }
+    }
+  });
+
+  vm.$watch('child.words', (...args) => {
+    console.log(args);
+  });
+</script>
+</body>
+</html>
