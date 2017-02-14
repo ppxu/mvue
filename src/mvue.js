@@ -7,12 +7,12 @@ class MVUE {
       this._proxy(key);
     });
 
-    observe(data, this);
+    observe(data);
 
     this.$compile = new Compile(options.el || document.body, this);
   }
 
-  $watch (key, cb, options) {
+  $watch (key, cb) {
     new Watcher(this, key, cb);
   }
 

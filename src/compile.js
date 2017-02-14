@@ -44,9 +44,11 @@ class Compile {
     let nodeAttrs = node.attributes;
     Array.from(nodeAttrs).forEach(attr => {
       let attrName = attr.name;
+
       if (this.isDirective(attrName)) {
         let exp = attr.value;
         let dir = attrName.substring(2);
+
         if (this.isEventDirective(dir)) {
           compileUtil.eventHandler(node, this.$vm, exp, dir);
         } else {
@@ -108,6 +110,7 @@ let compileUtil = {
   bind (node, vm, exp, dir) {
     let updaterFn = updater[dir + 'Updater'];
     updaterFn && updaterFn(node, this._getVMVal(vm, exp));
+
     new Watcher(vm, exp, (value, oldValue) => {
       updaterFn && updaterFn(node, value, oldValue);
     });
